@@ -1,5 +1,6 @@
 from flask import Flask, flash, redirect, render_template, request, session, jsonify
 from flask_session import Session
+from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 import datetime, requests
 from deta import Deta
 
@@ -89,3 +90,59 @@ def create():
 
     entries_db.put(data, key)
     entries_drive.put(f"{key}.json", default_entry, "/")
+
+
+@app.route("/edit", methods=["POST"])
+def create():
+    """Endpoint for creating an entry"""
+    key = str(datetime.date.today())
+
+    if entries_db.get(key) is None:
+        flash("You already have an entry for today.")
+        return redirect("/")
+
+    data = {
+        "title": "",
+        "desc": "Today I...",
+        "people": [],
+        "places": [],
+        "file": f"{key}.json"
+    }
+
+    default_entry = """
+        {
+            "ops": [
+                 {       
+                    "insert": "Today I..."
+                }
+            ]
+        }"""
+
+    entries_db.put(data, key)
+    entries_drive.put(f"{key}.json", default_entry, "/")
+
+
+def apology(message, code=400):
+    """Render message as an apology to user."""
+    def escape(s):
+        """
+        Escape special characters.
+        https://github.com/jacebrowning/memegen#special-characters
+        """
+        for old, new in [("-", "--"), (" ", "-"), ("_", "__"), ("?", "~q"),
+                         ("%", "~p"), ("#", "~h"), ("/", "~s"), ("\"", "''")]:
+            s = s.replace(old, new)
+        return s
+    return render_template("apology.html", top=code, bottom=escape(message)), code
+
+
+def errorhandler(e):
+    """Handle error"""
+    if not isinstance(e, HTTPException):
+        e = InternalServerError()
+    return apology(e.name, e.code)
+
+
+# Listen for errors
+for code in default_exceptions:
+    app.errorhandler(code)(errorhandler)
