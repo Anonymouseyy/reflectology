@@ -92,36 +92,6 @@ def create():
     entries_drive.put(f"{key}.json", default_entry, "/")
 
 
-@app.route("/edit", methods=["POST"])
-def create():
-    """Endpoint for creating an entry"""
-    key = str(datetime.date.today())
-
-    if entries_db.get(key) is None:
-        flash("You already have an entry for today.")
-        return redirect("/")
-
-    data = {
-        "title": "",
-        "desc": "Today I...",
-        "people": [],
-        "places": [],
-        "file": f"{key}.json"
-    }
-
-    default_entry = """
-        {
-            "ops": [
-                 {       
-                    "insert": "Today I..."
-                }
-            ]
-        }"""
-
-    entries_db.put(data, key)
-    entries_drive.put(f"{key}.json", default_entry, "/")
-
-
 def apology(message, code=400):
     """Render message as an apology to user."""
     def escape(s):
