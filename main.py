@@ -1,8 +1,7 @@
-import os
 from flask import Flask, flash, redirect, render_template, request, session, jsonify
 from flask_session import Session
-from tempfile import mkdtemp
-import html, requests
+import datetime, requests
+from deta import Deta
 
 # Configure application
 app = Flask(__name__)
@@ -20,9 +19,45 @@ def after_request(response):
     return response
 
 
+# Initialize
+deta = Deta()
+entries_db = deta.Base("entries")
+entries_drive = deta.Drive("entries")
+
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     """Home Page"""
-    q = requests.get("https://zenquotes.io/api/today").json()
+    q = requests.get("https://zenquotes.io/api/today").json()[0]
 
     return render_template("index.html", quote=q)
+
+
+@app.route("/create", methods=["POST"])
+def create():
+    """Endpoint for creating an entry"""
+    key = str(datetime.date.today())
+
+    if entries_db.get(key) is None:
+        flash("You already have an entry for today.")
+        return redirect("/")
+
+    data = {
+        "title": "",
+        "desc": "Today I...",
+        "people": [],
+        "places": [],
+        "file": f"{key}.json"
+    }
+
+    default_entry = """
+        {
+            "ops": [
+                 {       
+                    "insert": "Today I..."
+                }
+            ]
+        }"""
+
+    entries_db.put(data, key)
+    entries_drive.put(f"{key}.json", default_entry, "/")

@@ -6,11 +6,12 @@
 
 {% block main %}
     <header>
-        <h1 class="title">Reflectology</h1>
-        <span class="quote">
-            <h2>{{ quote.q }}</h2>
-            <h3>{{ quote.a }}</h3>
-        </span>
-        
+        <div class="top">
+            <h1 class="title">Reflectology</h1>
+            <span class="quote">
+                <h2>{{ quote.q }}</h2>
+                <h3>- {{ quote.a }}</h3>
+            </span>
+        </div>
     </header>
 {% endblock %}
