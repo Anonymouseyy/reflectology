@@ -2,7 +2,7 @@ import os
 from flask import Flask, flash, redirect, render_template, request, session, jsonify
 from flask_session import Session
 from tempfile import mkdtemp
-import html
+import html, requests
 
 # Configure application
 app = Flask(__name__)
@@ -23,5 +23,6 @@ def after_request(response):
 @app.route("/", methods=["GET", "POST"])
 def index():
     """Home Page"""
+    q = requests.get("https://zenquotes.io/api/today").json()
 
-    return render_template("index.html")
+    return render_template("index.html", quote=q)

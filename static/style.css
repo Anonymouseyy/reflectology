@@ -1,0 +1,25 @@
+* {
+    background: #3D3D3D;
+}
+
+.title {
+    color: #FFF;
+    text-align: left;
+    margin-left: 3vw;
+    margin-top: 1vh;
+    font-family: Sansita Swashed;
+    font-size: 5em;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.quote {
+    color: #FFF;
+    text-align: right;
+    font-family: Sansita Swashed;
+    font-size: 1em;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
