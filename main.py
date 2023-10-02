@@ -46,7 +46,7 @@ def index():
 
         if entry["key"] == str(datetime.date.today()):
             display_title = "Today, " + day.strftime("%B %d") + suf + f": {entry['title']}"
-        elif entry["key"] == str(datetime.date.today()-datetime.timedelta(days=1)):
+        elif entry["key"] == str(datetime.date.today() - datetime.timedelta(days=1)):
             display_title = "Yesterday, " + day.strftime("%B %d") + suf + f": {entry['title']}"
         else:
             display_title = day.strftime("%A, %B %d") + suf + f": {entry['title']}"
@@ -90,6 +90,32 @@ def create():
 
     entries_db.put(data, key)
     entries_drive.put(f"{key}.json", default_entry, "/")
+
+    return redirect(f"/edit?entry={key}")
+
+
+@app.route("/edit", methods=["POST"])
+def edit():
+    """Endpoint for creating an entry"""
+    entry = entries_db.get(request.args["entry"])
+    day = datetime.date.fromisoformat(entry['key'])
+    suf = "th"
+
+    if day.day in [1, 21, 31]:
+        suf = "st"
+    elif day.day in [2, 22]:
+        suf = "nd"
+
+    if entry["key"] == str(datetime.date.today()):
+        entry["display_title"] = "Today, " + day.strftime("%B %d") + suf + f": {entry['title']}"
+    elif entry["key"] == str(datetime.date.today() - datetime.timedelta(days=1)):
+        entry["display_title"] = "Yesterday, " + day.strftime("%B %d") + suf + f": {entry['title']}"
+    else:
+        entry["display_title"] = day.strftime("%A, %B %d") + suf + f": {entry['title']}"
+
+    content = entries_drive.get(entry["file"])
+
+    return render_template("edit.html", entry=entry, content=content)
 
 
 def apology(message, code=400):
