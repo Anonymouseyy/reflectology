@@ -30,7 +30,35 @@ def index():
     """Home Page"""
     q = requests.get("https://zenquotes.io/api/today").json()[0]
 
-    return render_template("index.html", quote=q)
+    # Fetch returns objects in alphanumerical order
+    entries = entries_db.fetch().items().reverse()
+    formatted_entries = []
+
+    for entry in entries:
+        day = datetime.date.fromisoformat(entry['key'])
+        suf = "th"
+
+        if day.day in [1, 21, 31]:
+            suf = "st"
+        elif day.day in [2, 22]:
+            suf = "nd"
+
+        if entry["key"] == str(datetime.date.today()):
+            display_title = "Today, " + day.strftime("%B %d") + suf + f": {entry['title']}"
+        elif entry["key"] == str(datetime.date.today()-datetime.timedelta(days=1)):
+            display_title = "Yesterday, " + day.strftime("%B %d") + suf + f": {entry['title']}"
+        else:
+            display_title = day.strftime("%A, %B %d") + suf + f": {entry['title']}"
+
+        data = {
+            "key": entry["key"],
+            "display_title": display_title,
+            "desc": entry["desc"]
+        }
+
+        formatted_entries.append(data)
+
+    return render_template("index.html", quote=q, entries=formatted_entries)
 
 
 @app.route("/create", methods=["POST"])
