@@ -113,7 +113,7 @@ def edit():
     else:
         entry["display_title"] = day.strftime("%A, %B ") + str(day.day) + suf + ":"
 
-    content = entries_drive.get(entry["file"]).read()
+    content = entries_drive.get(entry["file"]).read().decode()
 
     return render_template("edit.html", entry=entry, content=content, quote=q)
 
@@ -135,6 +135,8 @@ def save():
 
     entries_db.update(updates, key)
     entries_drive.put(f"{key}.json", f"{data[2]['content']}")
+
+    return jsonify({"res": "success"})
 
 
 def apology(message, code=400):
