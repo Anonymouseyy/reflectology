@@ -134,7 +134,7 @@ def save():
     }
 
     entries_db.update(updates, key)
-    entries_drive.put(f"{key}.json", r"./notes", f"{data[2]['content']}")
+    entries_drive.put(f"{key}.json", f"{data[2]['content']}")
 
 
 def apology(message, code=400):
