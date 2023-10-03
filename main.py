@@ -1,5 +1,4 @@
-from flask import Flask, flash, redirect, render_template, request, session, jsonify
-from flask_session import Session
+from flask import Flask, flash, redirect, render_template, request, jsonify
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 import datetime, requests
 from deta import Deta
