@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit
+{% endblock %}
+
+{% block main %}
+    <header>
+        <div class="top">
+            <h1 class="title">Reflectology</h1>
+            <span class="quote">
+                <h2>{{ quote.q }}</h2>
+                <h3>- {{ quote.a }}</h3>
+            </span>
+        </div>
+    </header>
+    <body>
+        <h1 class="edit-title">
+            <div style="display: inline-block;">{{ entry.display_title }}</div>
+            <div id="name" contenteditable="true" style="display: inline-block; width: 60vw;">{{ entry.title }}</div>
+        </h1>
+        <hr class="topline">
+        <div class="main-edit">
+            <div class="column">
+                <div id="editor" style="height: 40vh;"></div><br>
+                <div style="display: -webkit-inline-box;">
+                    <button id="save" class="btn btn-primary" style="font-size: 1.5rem; margin-left: 10px; text-align: left;"><i id="success" class="fa-solid fa-check"></i>
+                        <div id="spinner" class="spinner-border text-light"></div> Save</button>
+                </div>
+            </div>
+            <div class="column">
+                <h2>Other Stuff Here</h2>
+            </div>
+        </div>
+    </body>
+    <script src="/static/editor.js"></script>
+{% endblock %}

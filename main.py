@@ -45,11 +45,11 @@ def index():
             suf = "nd"
 
         if entry["date"] == str(datetime.date.today()):
-            display_title = "Today, " + day.strftime("%B %d") + suf + f": {entry['title']}"
+            display_title = "Today, " + day.strftime("%B ") + str(day.day) + suf + f": {entry['title']}"
         elif entry["date"] == str(datetime.date.today() - datetime.timedelta(days=1)):
-            display_title = "Yesterday, " + day.strftime("%B %d") + suf + f": {entry['title']}"
+            display_title = "Yesterday, " + day.strftime("%B ") + str(day.day) + suf + f": {entry['title']}"
         else:
-            display_title = day.strftime("%A, %B %d") + suf + f": {entry['title']}"
+            display_title = day.strftime("%A, %B ") + str(day.day) + suf + f": {entry['title']}"
 
         data = {
             "key": entry["key"],
@@ -94,7 +94,9 @@ def create():
 
 @app.route("/edit", methods=["GET", "POST"])
 def edit():
-    """Endpoint for creating an entry"""
+    """Endpoint for editting an entry"""
+
+    q = requests.get("https://zenquotes.io/api/today").json()[0]
     entry = entries_db.get(request.args["entry"])
     day = datetime.date.fromisoformat(entry['date'])
     suf = "th"
@@ -105,15 +107,15 @@ def edit():
         suf = "nd"
 
     if entry["date"] == str(datetime.date.today()):
-        entry["display_title"] = "Today, " + day.strftime("%B %d") + suf
+        entry["display_title"] = "Today, " + day.strftime("%B ") + str(day.day) + suf + ":"
     elif entry["date"] == str(datetime.date.today() - datetime.timedelta(days=1)):
-        entry["display_title"] = "Yesterday, " + day.strftime("%B %d") + suf
+        entry["display_title"] = "Yesterday, " + day.strftime("%B ") + str(day.day) + suf + ":"
     else:
-        entry["display_title"] = day.strftime("%A, %B %d") + suf
+        entry["display_title"] = day.strftime("%A, %B ") + str(day.day) + suf + ":"
 
-    content = entries_drive.get(entry["file"])
+    content = entries_drive.get(entry["file"]).read()
 
-    return render_template("edit.html", entry=entry, content=content)
+    return render_template("edit.html", entry=entry, content=content, quote=q)
 
 
 def apology(message, code=400):

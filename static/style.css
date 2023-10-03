@@ -29,6 +29,46 @@
     width: 50vw;
 }
 
+.edit-title {
+    color: #FFF;
+    text-align: left;
+    margin-left: 2vw;
+    margin-top: 1vh;
+    font-family: Sansita Swashed;
+    font-size: 3em;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.topline {
+    color: white;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+}
+
+.main-edit {
+    margin-left: 3vw;
+    margin-right: 3vw;
+}
+
+@media (orientation:landscape) {
+    .column {
+        float: left;
+        width: 50%;
+    }
+}
+
+@media (orientation:portrait) {
+    .column {
+        float: left;
+        width: 100%;
+    }
+}
+
 .top {
     display: flex;
 }
