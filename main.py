@@ -118,6 +118,25 @@ def edit():
     return render_template("edit.html", entry=entry, content=content, quote=q)
 
 
+@app.route("/save", methods=["POST"])
+def save():
+    """Endpoint for saving an entry"""
+    data = request.get_json()
+    key = data[0]["key"]
+    desc = data[3]["raw_content"]
+
+    if len(desc) > 150:
+        desc = desc[:150]
+
+    updates = {
+        "title": data[1]["title"],
+        "desc": desc
+    }
+
+    entries_db.update(updates, key)
+    entries_drive.put(f"{key}.json", r"./notes", f"{data[2]['content']}")
+
+
 def apology(message, code=400):
     """Render message as an apology to user."""
     def escape(s):

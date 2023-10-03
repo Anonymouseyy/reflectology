@@ -17,7 +17,7 @@
     <body>
         <h1 class="edit-title">
             <div style="display: inline-block;">{{ entry.display_title }}</div>
-            <div id="name" contenteditable="true" style="display: inline-block; width: 60vw;">{{ entry.title }}</div>
+            <div id="title" contenteditable="true" style="display: inline-block; width: 60vw;">{{ entry.title }}</div>
         </h1>
         <hr class="topline">
         <div class="main-edit">
@@ -33,5 +33,13 @@
             </div>
         </div>
     </body>
+    <script>
+        let k = "{{ entry.key }}";
+    </script>
     <script src="/static/editor.js"></script>
+    <script>
+        {% autoescape false %}
+        quill.setContents({{ content }});
+        {% endautoescape %}
+    </script>
 {% endblock %}
