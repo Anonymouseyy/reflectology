@@ -42,6 +42,8 @@ def index():
             suf = "st"
         elif day.day in [2, 22]:
             suf = "nd"
+        elif day.day in [3, 23]:
+            suf = "rd"
 
         if entry["date"] == str(datetime.date.today()):
             display_title = "Today, " + day.strftime("%B ") + str(day.day) + suf + f": {entry['title']}"
