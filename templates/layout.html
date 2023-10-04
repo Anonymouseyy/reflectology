@@ -32,16 +32,23 @@
     </head>
 
     <body>
-        {% if get_flashed_messages() %}
-            <header>
-                <div class="alert alert-primary alert-dismissible fade show text-center" role="alert">
-                    <span>{{ get_flashed_messages() | join(" ") }}</span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 0rem 1rem;">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </header>
-        {% endif %}
+        <header>
+            {% if get_flashed_messages() %}
+            <div class="alert alert-primary alert-dismissible fade show text-center" role="alert">
+                <span>{{ get_flashed_messages() | join(" ") }}</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 0rem 1rem;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endif %}
+            <div class="top">
+                <h1 class="title">Reflectology</h1>
+                <span class="quote">
+                    <h2>{{ quote.q }}</h2>
+                    <h3>- {{ quote.a }}</h3>
+                </span>
+            </div>
+        </header>
 
         <main class="main-content">
             {% block main %}{% endblock %}
