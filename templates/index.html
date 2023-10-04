@@ -5,7 +5,23 @@
 {% endblock %}
 
 {% block main %}
-    {% for entry in entries %}
-
-    {% endfor %}
+    <span class="top">
+        <h2>Home</h2>
+        <a class="new" href="/create"><img src="/static/images/add.png" alt="+"></a>
+    </span>
+    <hr>
+    <div class="row">
+        <section class="entries">
+            {% for entry in entries %}
+                <div class="entry">
+                    <h3>{{ entry.display_title }}</h3>
+                    <hr>
+                    <p>{{ entry.desc }}</p>
+                </div>
+            {% endfor %}
+        </section>
+        <section class="calendar">
+            calendar goes here
+        </section>
+    </div>
 {% endblock %}

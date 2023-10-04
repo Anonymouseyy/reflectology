@@ -1,9 +1,9 @@
 * {
     background: #3D3D3D;
+    color: white;
 }
 
 .title {
-    color: #FFF;
     text-align: left;
     margin-left: 2vw;
     margin-top: 1vh;
@@ -17,7 +17,6 @@
 
 .quote {
     display: block;
-    color: #FFF;
     text-align: right;
     margin-right: 2vw;
     margin-top: 3vh;
@@ -30,7 +29,6 @@
 }
 
 .edit-title {
-    color: #FFF;
     text-align: left;
     margin-left: 2vw;
     margin-top: 1vh;
@@ -42,7 +40,6 @@
 }
 
 .topline {
-    color: white;
     width: 95%;
     margin-left: auto;
     margin-right: auto;
@@ -71,4 +68,29 @@
 
 .top {
     display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    font-family: Sansita Swashed;
+}
+
+hr {
+    background-color: white;
+}
+
+main {
+    padding: 2em;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.entries {
+    width: 50%;
+}
+
+.entry > h3 {
+    font-family: Sansita Swashed;
 }
