@@ -28,7 +28,7 @@
     width: 50vw;
 }
 
-.edit-title {
+.sub-title {
     text-align: left;
     margin-left: 2vw;
     margin-top: 1vh;
@@ -83,6 +83,8 @@ main {
 }
 
 .row {
+    margin-left: 3vw;
+    margin-right: 3vw;
     display: flex;
     flex-direction: row;
 }
@@ -93,4 +95,12 @@ main {
 
 .entry > a > h3 {
     font-family: Sansita Swashed;
+}
+
+.new {
+    margin-right: 3vw;
+}
+
+a:hover {
+    text-decoration: none;
 }
