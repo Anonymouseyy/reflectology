@@ -91,6 +91,6 @@ main {
     width: 50%;
 }
 
-.entry > h3 {
+.entry > a > h3 {
     font-family: Sansita Swashed;
 }

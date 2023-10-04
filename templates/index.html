@@ -14,7 +14,9 @@
         <section class="entries">
             {% for entry in entries %}
                 <div class="entry">
-                    <h3>{{ entry.display_title }}</h3>
+                    <a href="/edit?entry={{ entry.key }}">
+                        <h3>{{ entry.display_title }}</h3>
+                    </a>
                     <hr>
                     <p>{{ entry.desc }}</p>
                 </div>
