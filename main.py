@@ -143,6 +143,18 @@ def save():
     return jsonify({"res": "success"})
 
 
+@app.route("/delete", methods=["POST"])
+def delete():
+    """Endpoint for deleting an entry"""
+    key = request.form.get("entry")
+
+    item = entries_db.get(key)
+    entries_drive.delete(item["file"])
+    entries_db.delete(key)
+
+    return redirect("/")
+
+
 def apology(message, code=400):
     """Render message as an apology to user."""
     def escape(s):

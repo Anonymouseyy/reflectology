@@ -14,9 +14,12 @@
         <section class="entries">
             {% for entry in entries %}
                 <div class="entry">
-                    <a href="/edit?entry={{ entry.key }}">
-                        <h3>{{ entry.display_title }}</h3>
-                    </a>
+                    <div style="display: inline-block;">
+                        <a href="/edit?entry={{ entry.key }}">
+                            <h3>{{ entry.display_title }}</h3>
+                        </a>
+                        <button class="icon-btn del" onclick="document.getElementById('del {{ entry.key }}').style.display='block'"><i class="fa-sharp fa-solid fa-trash del-ico"></i></button>
+                    </div>
                     <hr>
                     <p>{{ entry.desc }}</p>
                 </div>
@@ -26,4 +29,21 @@
             calendar goes here
         </section>
     </div>
+    {% for entry in entries %}
+    <div id="del {{ entry.key }}" class="modal">
+        <span onclick="document.getElementById('del {{ entry.key }}').style.display='none'" class="close" title="Close Modal">&times;</span>
+        <form class="modal-content" action="/delete" method="post">
+            <div class="container">
+                <h1>Delete</h1>
+                <p>Are you sure you want to delete {{ entry.display_title }}?</p>
+
+                <input type="hidden" name="entry" value="{{ entry.key }}" />
+                <div class="clearfix">
+                    <button type="button" onclick="document.getElementById('del {{ entry.key }}').style.display='none'" class="cancelbtn">Cancel</button>
+                    <button type="submit" class="deletebtn">Delete</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    {% endfor %}
 {% endblock %}
