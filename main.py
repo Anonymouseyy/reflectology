@@ -31,7 +31,8 @@ def index():
     q = requests.get("https://zenquotes.io/api/today").json()[0]
 
     # Fetch returns objects in alphanumerical order
-    entries = reversed(entries_db.fetch().items)
+    entries = entries_db.fetch().items
+    entries.sort(key=lambda x: x["date"], reverse=True)
     formatted_entries = []
 
     for entry in entries:
