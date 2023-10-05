@@ -157,8 +157,8 @@ def save():
     key = data[0]["key"]
     desc = data[3]["raw_content"]
 
-    if len(desc) > 489:
-        desc = desc[:486]+"..."
+    if len(desc) > 481:
+        desc = desc[:478]+"..."
 
     updates = {
         "title": data[1]["title"],
