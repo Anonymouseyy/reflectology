@@ -434,9 +434,11 @@ a:hover {
     -ms-transition: color 0.25s;
     -o-transition: color 0.25s;
     transition: color 0.25s;
+    background-color: #97ce7f;
   }
   .calendar .clndr .days-container .events .x-button:hover {
     color: white;
+    background-color: #6f9b5b;
   }
   .calendar .clndr .days-container .events .events-list {
     overflow: scroll;
@@ -454,14 +456,14 @@ a:hover {
     transition: background-color 0.25s;
   }
   .calendar .clndr .days-container .events .events-list .event:hover {
-    background-color: #f5f5f5;
+    background-color: #474444;
   }
   .calendar .clndr .days-container .events .events-list .event a {
     position: relative;
     font-size: 12px;
     letter-spacing: 1px;
     background-color: transparent;
-    color: #212121;
+    color: white;
     text-decoration: none;
     -webkit-transition: color 0.25s;
     -moz-transition: color 0.25s;
