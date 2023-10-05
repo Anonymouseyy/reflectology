@@ -26,7 +26,31 @@
             {% endfor %}
         </section>
         <section class="calendar">
-            calendar goes here
+            <script id="clndr-template" type="text/template">
+
+                <div class="controls">
+                  <div class="clndr-previous-button">&lsaquo;</div><div class="month"><%= month %></div><div class="clndr-next-button">&rsaquo;</div>
+                </div>
+    
+                <div class="days-container">
+                  <div class="days">
+                    <div class="headers">
+                      <% _.each(daysOfTheWeek, function(day) { %><div class="day-header"><%= day %></div><% }); %>
+                    </div>
+                    <% _.each(days, function(day) { %><div class="<%= day.classes %>" id="<%= day.id %>"><%= day.day %></div><% }); %>
+                  </div>
+                  <div class="events">
+                    <div class="headers">
+                      <div class="x-button">x</div>
+                      <div class="event-header">EVENTS</div>
+                    </div>
+                    <div class="events-list">
+
+                    </div>
+                  </div>
+                </div>
+    
+              </script>
         </section>
     </div>
     {% for entry in entries %}
@@ -46,4 +70,15 @@
         </form>
     </div>
     {% endfor %}
+
+    <script>
+        {% autoescape false %}
+            const events = {{ entries }};
+        {% endautoescape %}
+    </script>
+
+    <script src="/static/js/underscore.js" type="text/javascript"></script>
+    <script src="/static/js/moment.js" type="text/javascript"></script>
+    <script src="/static/js/clndr.js" type="text/javascript"></script>
+    <script src="/static/calendar.js" type="text/javascript"></script>
 {% endblock %}
