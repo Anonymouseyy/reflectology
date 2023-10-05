@@ -67,11 +67,38 @@ def index():
 @app.route("/create", methods=["GET"])
 def create():
     """Endpoint for creating an entry"""
+    adjectives = [
+        "Massive",
+        "Great",
+        "Stellar",
+        "Amazing",
+        "Cool",
+        "Fantastic"
+    ]
+    adjectives2 = [
+        "Monkey",
+        "Crazy",
+        "Bright",
+        "Sunny",
+        "Beautiful",
+        "Majestic"
+    ]
+    nouns = [
+        "Adventure",
+        "Journey",
+        "Mission",
+        "Innovation",
+        "Creation",
+        "Day"
+    ]
+
+    title = f"The {random.choice(adjectives)} {random.choice(adjectives2)} {random.choice(nouns)}"
+
     date = str(datetime.date.today())
 
     data = {
         "date": date,
-        "title": "",
+        "title": title,
         "desc": "Today I...",
         "people": [],
         "places": [],
