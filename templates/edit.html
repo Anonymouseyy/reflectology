@@ -12,14 +12,29 @@
     <hr class="topline">
     <div class="main-edit">
         <div class="column">
-            <div id="editor" style="height: 40vh;"></div><br>
+            <div id="editor" style="height: 60vh;"></div><br>
             <div style="display: -webkit-inline-box;">
                 <button id="save" class="btn btn-primary" style="font-size: 1.5rem; margin-left: 10px; text-align: left;"><i id="success" class="fa-solid fa-check"></i>
                     <div id="spinner" class="spinner-border text-light"></div> Save</button>
             </div>
         </div>
         <div class="column">
-            <h2>Other Stuff Here</h2>
+            <div class="editor-content">
+                <div class="prompts">
+                    <h2>Prompts</h2>
+                    <hr>
+                    <div class="slideshow-container">
+                        {% for prompt in prompts %}
+                            <div class="slide-items">
+                                <h3>{{ prompt }}</h3>
+                            </div>
+                        {% endfor %}
+
+                        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script>

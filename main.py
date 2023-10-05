@@ -1,6 +1,6 @@
 from flask import Flask, flash, redirect, render_template, request, jsonify
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
-import datetime, requests
+import datetime, requests, random
 from deta import Deta
 
 # Configure application
@@ -119,7 +119,21 @@ def edit():
 
     content = entries_drive.get(entry["file"]).read().decode()
 
-    return render_template("edit.html", entry=entry, content=content, quote=q)
+    ideas_pared = []
+    ideas = ["What am I proud of today?",
+             "What am I grateful for today?"
+             "What problem am I currently facing?",
+             "What is something that I started today?",
+             "Something fun I did today.",
+             "What did I eat for lunch?",
+             "What is something I accomplished today?",
+             "Who is my best friend today?"]
+
+    for i in range(5):
+        ideas_pared.append(random.choice(ideas))
+        ideas.remove(ideas_pared[i])
+
+    return render_template("edit.html", entry=entry, content=content, quote=q, prompts=ideas_pared)
 
 
 @app.route("/save", methods=["POST"])
