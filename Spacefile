@@ -1,0 +1,9 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+v: 0
+micros:
+  - name: reflectology
+    src: ./
+    engine: python3.9
+    primary: true
+    dev: flask --app main run
+    run: gunicorn main:app
