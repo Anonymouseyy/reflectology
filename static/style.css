@@ -5,7 +5,6 @@
 
 .title {
     text-align: left;
-    margin-left: 2vw;
     margin-top: 1vh;
     font-family: Sansita Swashed;
     font-size: 5em;
@@ -253,4 +252,11 @@ a:hover {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.logo-image {
+    margin-top: 3vh;
+    margin-left: 4vw;
+    width: 7em;
+    length: 7em;
 }
