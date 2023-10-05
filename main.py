@@ -97,9 +97,10 @@ def create():
 @app.route("/edit", methods=["GET", "POST"])
 def edit():
     """Endpoint for editting an entry"""
-
+    # Basic Displaying
     q = requests.get("https://zenquotes.io/api/today").json()[0]
-    entry = entries_db.get(request.args["entry"])
+    key = request.args["entry"]
+    entry = entries_db.get(key)
     day = datetime.date.fromisoformat(entry['date'])
     suf = "th"
 
@@ -119,6 +120,7 @@ def edit():
 
     content = entries_drive.get(entry["file"]).read().decode()
 
+    # Get ideas
     ideas_pared = []
     ideas = ["What am I proud of today?",
              "What am I grateful for today?",
@@ -133,7 +135,14 @@ def edit():
         ideas_pared.append(random.choice(ideas))
         ideas.remove(ideas_pared[i])
 
-    return render_template("edit.html", entry=entry, content=content, quote=q, prompts=ideas_pared)
+    # Getting reflection entry
+    all_items = list(entries_db.fetch({"date?ne": entry['date']}).items)
+    if all_items:
+        reflection = random.choice(all_items)
+    else:
+        reflection = None
+
+    return render_template("edit.html", entry=entry, content=content, quote=q, prompts=ideas_pared, reflection=reflection)
 
 
 @app.route("/save", methods=["POST"])

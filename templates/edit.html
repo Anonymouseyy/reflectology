@@ -21,6 +21,16 @@
         </div>
         <div class="column">
             <div class="editor-content">
+                {% if reflection %}
+                <div class="prompts">
+                    <a href="/edit?entry={{ reflection.key }}">
+                        <h2>On {{ reflection.date }}, you wrote...</h2>
+                    </a>
+                    <hr>
+                    <h4>{{ reflection.desc }}</h4>
+                </div>
+                {% endif %}
+                <br>
                 <div class="prompts">
                     <h2>Prompts</h2>
                     <hr>
