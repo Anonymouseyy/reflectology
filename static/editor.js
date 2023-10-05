@@ -53,5 +53,48 @@ $("#save").click(function(){
        }
     });
 
+    change = new Delta();
     $("#save").prop("disabled", false);
 });
+
+var change = new Delta();
+quill.on('text-change', function(delta) {
+  change = change.compose(delta);
+});
+
+
+window.onbeforeunload = function() {
+  if (change.length() > 0) {
+    return 'There are unsaved changes. Are you sure you want to leave?';
+  }
+}
+
+setInterval(function() {
+  if (change.length() > 0) {
+    let c = quill.getContents();
+    let rc = quill.getText();
+    let t = $("#title").text();
+    var server_data = [
+        {"key": k},
+        {"title": t},
+        {"content": c},
+        {"raw_content": rc}
+    ];
+
+    $.ajax({
+        type: "POST",
+        url: "/save",
+        data: JSON.stringify(server_data),
+        contentType: "application/json",
+        dataType: 'json',
+        success: function(result) {
+            if (result.res == "success") {
+                $("#success").show();
+                $("#success").fadeOut(2000);
+            }
+       }
+    })
+
+    change = new Delta();
+  }
+}, 30*1000);
