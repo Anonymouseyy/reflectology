@@ -45,11 +45,7 @@
                       <div class="event-header">EVENTS</div>
                     </div>
                     <div class="events-list">
-                      <% _.each(eventsThisMonth, function(event) { %>
-                        <div class="event">
-                          <a href="<%= event.url %>"><%= moment(event.date).format('MMMM Do') %>: <%= event.title %></a>
-                        </div>
-                      <% }); %>
+
                     </div>
                   </div>
                 </div>
@@ -74,6 +70,13 @@
         </form>
     </div>
     {% endfor %}
+
+    <script>
+        {% autoescape false %}
+            const events = {{ entries }};
+        {% endautoescape %}
+    </script>
+
     <script src="/static/js/underscore.js" type="text/javascript"></script>
     <script src="/static/js/moment.js" type="text/javascript"></script>
     <script src="/static/js/clndr.js" type="text/javascript"></script>

@@ -1,23 +1,29 @@
 let clndr = {};
 
-let events = [
-    { date: '2023-10' + '-' + '10', title: 'Persian Kitten Auction', location: 'Center for Beautiful Cats' },
-    { date: '2023-10' + '-' + '19', title: 'Cat Frisbee', location: 'Jefferson Park' },
-    { date: '2023-10' + '-' + '23', title: 'Kitten Demonstration', location: 'Center for Beautiful Cats' },
-    { date: '2023-10' + '-' + '07',    title: 'Small Cat Photo Session', location: 'Center for Cat Photography' }
-  ];
-
 $(".calendar").clndr({
     template: $('#clndr-template').html(),
     events: events,
     clickEvents: {
       click: function(target) {
-        if(target.events.length) {
-          var daysContainer = $('#mini-clndr').find('.days-container');
-          daysContainer.toggleClass('show-events', true);
-          $('#mini-clndr').find('.x-button').click( function() {
-            daysContainer.toggleClass('show-events', false);
-          });
+        const event = target.events.filter(x => x.date == target.date._i);
+        if(event.length == 1) {
+            window.location.href = '/edit?entry=' + event[0].key;
+        } else if(event.length > 1) {
+            document.getElementsByClassName("events-list")[0].innerHTML = "";
+            for(i in event) {
+                let div = document.createElement('div');
+                div.className = "event"
+                let a = document.createElement('a');
+                a.href = '/edit?entry=' + event[i].key;
+                a.innerText = event[i].display_title;
+                div.appendChild(a);
+                document.getElementsByClassName("events-list")[0].appendChild(div);
+                var daysContainer = $('.calendar').find('.days-container');
+                daysContainer.toggleClass('show-events', true);
+                $('.calendar').find('.x-button').click( function() {
+                    daysContainer.toggleClass('show-events', false);
+                });
+            }
         }
       }
     },

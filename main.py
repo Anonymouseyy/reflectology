@@ -56,7 +56,8 @@ def index():
         data = {
             "key": entry["key"],
             "display_title": display_title,
-            "desc": entry["desc"]
+            "desc": entry["desc"],
+            "date": entry["date"]
         }
 
         formatted_entries.append(data)
