@@ -31,11 +31,13 @@ $("#save").click(function(){
     let c = quill.getContents();
     let rc = quill.getText();
     let t = $("#title").text();
+    let d = document.getElementById("date-input").value;
     var server_data = [
         {"key": k},
         {"title": t},
         {"content": c},
-        {"raw_content": rc}
+        {"raw_content": rc},
+        {"date": d}
     ];
 
     $.ajax({
@@ -74,11 +76,13 @@ setInterval(function() {
     let c = quill.getContents();
     let rc = quill.getText();
     let t = $("#title").text();
+    let d = document.getElementById("date-input").value;
     var server_data = [
         {"key": k},
         {"title": t},
         {"content": c},
-        {"raw_content": rc}
+        {"raw_content": rc},
+        {"date": d}
     ];
 
     $.ajax({

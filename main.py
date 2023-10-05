@@ -121,7 +121,7 @@ def edit():
 
     ideas_pared = []
     ideas = ["What am I proud of today?",
-             "What am I grateful for today?"
+             "What am I grateful for today?",
              "What problem am I currently facing?",
              "What is something that I started today?",
              "Something fun I did today.",
@@ -150,6 +150,9 @@ def save():
         "title": data[1]["title"],
         "desc": desc
     }
+
+    if data[4]["date"]:
+        updates["date"] = data[4]["date"]
 
     entries_db.update(updates, key)
     entries_drive.put(f"{key}.json", f"{data[2]['content']}")
