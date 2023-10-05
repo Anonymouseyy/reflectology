@@ -1,7 +1,23 @@
 var Delta = Quill.import('delta');
+
+var toolbarOptions = [
+  ['bold', 'italic', 'underline', 'strike'],
+  ['code-block'],
+
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  [{ 'script': 'sub'}, { 'script': 'super' }],
+  [{ 'indent': '-1'}, { 'indent': '+1' }],
+  [{ 'direction': 'rtl' }],
+
+  [{ 'color': [] }, { 'background': [] }],
+  [{ 'font': [] }],
+
+  ['clean']
+];
+
 var quill = new Quill('#editor', {
   modules: {
-    toolbar: true
+    toolbar: toolbarOptions
   },
   placeholder: 'Compose an epic...',
   theme: 'snow'
