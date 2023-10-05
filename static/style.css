@@ -93,7 +93,14 @@ main {
     width: 50%;
 }
 
-.entry > div> a > h3 {
+.entry-header {
+    display: flex;
+    flex-direction: row;
+    padding-inline-end: 1em;
+    justify-content: space-between;
+}
+
+.entry > div > a > h3 {
     font-family: Sansita Swashed;
 }
 
