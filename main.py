@@ -149,19 +149,23 @@ def edit():
 
     # Get ideas
     ideas_pared = []
-    ideas = ["What am I proud of today?",
-             "What am I grateful for today?",
-             "What is a problem am I currently facing?",
-             "What is something that I started today?",
-             "Something fun I did today.",
-             "What did I eat for lunch?",
-             "What is something I accomplished today?",
-             "Who is my best friend today?",
-             "How do I feel right now?",
-             "What are my thoughts on life right now?",
-             "What did I learn today?",
-             "What was the hardest thing I did today?",
-             "Rant about something"]
+    ideas = [
+        "What am I proud of today?",
+        "What am I grateful for today?",
+        "What is a problem am I currently facing?",
+        "What is something that I started today?",
+        "Something fun I did today.",
+        "What did I eat for lunch?",
+        "What is something I accomplished today?",
+        "Who is my best friend today?",
+        "How do I feel right now?",
+        "What are my thoughts on life right now?",
+        "What did I learn today?",
+        "What was the hardest thing I did today?",
+        "Rant about something",
+        "How will tomorrow be better?",
+        "Who do I dislike the most today?"
+    ]
 
     for i in range(5):
         ideas_pared.append(random.choice(ideas))
