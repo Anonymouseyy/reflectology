@@ -1,6 +1,6 @@
 from flask import Flask, flash, redirect, render_template, request, jsonify
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
-import datetime, requests, random
+import datetime, requests, random, string
 from deta import Deta
 
 # Configure application
@@ -114,7 +114,12 @@ def create():
             ]
         }"""
 
-    key = str(datetime.datetime.now())
+    key = date+" "+"".join([random.choice(list(string.ascii_lowercase + string.ascii_uppercase + string.digits))
+                            for _ in range(5)])
+    while not (entries_db.get(key) is None):
+        key = date + " " + "".join([random.choice(list(string.ascii_lowercase + string.ascii_uppercase + string.digits))
+                                    for _ in range(5)])
+
     entries_db.put(data, key)
     entries_drive.put(f"{key}.json", default_entry)
     entries_db.update({"file": f"{key}.json"}, key)
@@ -198,12 +203,14 @@ def save():
     }
 
     if data[4]["date"]:
+        entry = entries_db.get(key)
         updates["date"] = data[4]["date"]
+        # Create entirely new base entry and drive file
+    else:
+        entries_db.update(updates, key)
+        entries_drive.put(f"{key}.json", f"{data[2]['content']}")
 
-    entries_db.update(updates, key)
-    entries_drive.put(f"{key}.json", f"{data[2]['content']}")
-
-    return jsonify({"res": "success"})
+        return jsonify({"res": "success"})
 
 
 @app.route("/delete", methods=["POST"])
