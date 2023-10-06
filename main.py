@@ -32,7 +32,6 @@ def index():
 
     # Fetch returns objects in alphanumerical order
     entries = entries_db.fetch().items
-    entries.sort(key=lambda x: x["date"], reverse=True)
     formatted_entries = []
 
     for entry in entries:
@@ -115,7 +114,8 @@ def create():
             ]
         }"""
 
-    key = entries_db.put(data)["key"]
+    key = str(datetime.datetime.now())
+    entries_db.put(data, key)
     entries_drive.put(f"{key}.json", default_entry)
     entries_db.update({"file": f"{key}.json"}, key)
 
