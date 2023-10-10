@@ -25,6 +25,17 @@ entries_db = deta.Base("entries")
 entries_drive = deta.Drive("entries")
 
 
+def gen_key(date):
+    key = date + " " + "".join([random.choice(list(string.ascii_lowercase + string.ascii_uppercase + string.digits))
+                                for _ in range(5)])
+    while not (entries_db.get(key) is None):
+        key = date + " " + "".join(
+            [random.choice(list(string.ascii_lowercase + string.ascii_uppercase + string.digits))
+             for _ in range(5)])
+
+    return key
+
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     """Home Page"""
@@ -94,10 +105,10 @@ def create():
 
     title = f"The {random.choice(adjectives)} {random.choice(adjectives2)} {random.choice(nouns)}"
 
-    date = str(datetime.date.today())
+    td = str(datetime.date.today())
 
     data = {
-        "date": date,
+        "date": td,
         "title": title,
         "desc": "Today I...",
         "people": [],
@@ -114,11 +125,7 @@ def create():
             ]
         }"""
 
-    key = date+" "+"".join([random.choice(list(string.ascii_lowercase + string.ascii_uppercase + string.digits))
-                            for _ in range(5)])
-    while not (entries_db.get(key) is None):
-        key = date + " " + "".join([random.choice(list(string.ascii_lowercase + string.ascii_uppercase + string.digits))
-                                    for _ in range(5)])
+    key = gen_key(td)
 
     entries_db.put(data, key)
     entries_drive.put(f"{key}.json", default_entry)
@@ -197,16 +204,26 @@ def save():
     if len(desc) > 481:
         desc = desc[:478]+"..."
 
-    updates = {
-        "title": data[1]["title"],
-        "desc": desc
-    }
-
     if data[4]["date"]:
         entry = entries_db.get(key)
-        updates["date"] = data[4]["date"]
-        # Create entirely new base entry and drive file
+        new_key = gen_key(data[4]["date"])
+
+        entry["date"] = data[4]["date"]
+        entry["title"] = data[1]["title"]
+        entry["desc"] = desc
+
+        entries_db.put(entry, new_key)
+        entries_drive.delete(entry["file"])
+        entries_drive.put(f"{new_key}.json", f"{data[2]['content']}")
+        entries_db.update({"file": f"{new_key}.json"}, new_key)
+
+        return jsonify({"res": "redated"})
     else:
+        updates = {
+            "title": data[1]["title"],
+            "desc": desc
+        }
+
         entries_db.update(updates, key)
         entries_drive.put(f"{key}.json", f"{data[2]['content']}")
 
